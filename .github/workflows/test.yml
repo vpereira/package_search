@@ -33,14 +33,15 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
+      - name: Build docker-compose
+        run: docker-compose build
       - name: Start Docker Compose
         run: docker-compose up -d
       - name: Wait for services to be ready
         run: docker-compose ps
       - name: Run Tests
         run: |
-          docker build -t myapp .
-          docker run --network host myapp go test -v ./...
+          docker exec myapp bash -c 'make test'
       - name: Stop Docker Compose
         run: docker-compose down
 
