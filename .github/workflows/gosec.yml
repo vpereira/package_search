@@ -1,0 +1,23 @@
+name: Gosec
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  gosec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Gosec
+        run: |
+          export GOPATH=$HOME/go
+          export GOBIN=$(go env GOPATH)/bin
+          export PATH=$PATH:$GOPATH
+          export PATH=$PATH:$GOBIN
+          mkdir -p $GOPATH
+          mkdir -p $GOBIN 
+          make gosec
+

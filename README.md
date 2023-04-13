@@ -4,6 +4,7 @@
 ![Lint](https://github.com/vpereira/package_search/actions/workflows/lint.yml/badge.svg)
 ![Test](https://github.com/vpereira/package_search/actions/workflows/test.yml/badge.svg)
 ![Build](https://github.com/vpereira/package_search/actions/workflows/build.yml/badge.svg)
+![Gosec](https://github.com/vpereira/package_search/actions/workflows/gosec.yml/badge.svg)
 
 To run the docker environment:
 
