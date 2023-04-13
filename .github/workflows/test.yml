@@ -26,7 +26,7 @@ jobs:
         run: docker-compose ps
       - name: Run Tests
         run: |
-          docker-compose exec app bash -c 'make test'
+          docker-compose exec -T app bash -c 'make test'
       - name: Stop Docker Compose
         run: docker-compose down
 

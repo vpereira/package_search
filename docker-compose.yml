@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   app:
+    tty: true
     build: .
     environment:
       DB_HOST: postgres
