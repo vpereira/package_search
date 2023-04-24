@@ -24,8 +24,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	http.HandleFunc("/record", recordHandler(db))
-	http.HandleFunc("/records", recordsHandler(db))
+	http.HandleFunc("/record", enforceGet(recordHandler(db)))
+	http.HandleFunc("/records", enforceGet(recordsHandler(db)))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

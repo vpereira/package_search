@@ -3,18 +3,14 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"github.com/lib/pq"
 	"log"
 	"net/http"
+
+	"github.com/lib/pq"
 )
 
 func recordsHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-			return
-		}
-
 		queryValues := r.URL.Query()
 		names, ok := queryValues["name"]
 		if !ok || len(names) < 1 {
