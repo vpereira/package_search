@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"encoding/json"
@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/vpereira/package_search/internal/types"
 )
 
 func TestRecordsHandler(t *testing.T) {
@@ -17,7 +18,7 @@ func TestRecordsHandler(t *testing.T) {
 	err := db.Ping()
 	assert.NoError(t, err)
 
-	handler := recordsHandler(db)
+	handler := RecordsHandler(db)
 
 	// Test case 1: Records found
 	req, err := http.NewRequest("GET", "/records?name=package2&name=package1", nil)
@@ -28,7 +29,7 @@ func TestRecordsHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	var records []Record
+	var records []types.Record
 	err = json.Unmarshal(rr.Body.Bytes(), &records)
 	assert.NoError(t, err)
 
@@ -55,7 +56,7 @@ func TestRecordsHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	var emptyRecords []Record
+	var emptyRecords []types.Record
 	err = json.Unmarshal(rr.Body.Bytes(), &emptyRecords)
 	assert.NoError(t, err)
 

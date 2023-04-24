@@ -1,11 +1,11 @@
-package main
+package handlers
 
 import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
+  "github.com/vpereira/package_search/internal/types"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,7 +17,7 @@ func TestRecordHandler(t *testing.T) {
 	err := db.Ping()
 	assert.NoError(t, err)
 
-	handler := recordHandler(db)
+	handler := RecordHandler(db)
 
 	// Test case 1: Record found
 	req, err := http.NewRequest("GET", "/record?name=package1", nil)
@@ -28,7 +28,7 @@ func TestRecordHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	var record Record
+	var record types.Record
 	err = json.Unmarshal(rr.Body.Bytes(), &record)
 	assert.NoError(t, err)
 

@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"database/sql"
@@ -6,10 +6,11 @@ import (
 	"log"
 	"net/http"
 
+  "github.com/vpereira/package_search/internal/types"
 	"github.com/lib/pq"
 )
 
-func recordsHandler(db *sql.DB) http.HandlerFunc {
+func RecordsHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		queryValues := r.URL.Query()
 		names, ok := queryValues["name"]
@@ -18,7 +19,7 @@ func recordsHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		var records []Record
+		var records []types.Record
 
 		query := "SELECT name, version, release, location, summary FROM packages WHERE name = ANY($1)"
 		rows, err := db.Query(query, pq.Array(names))
@@ -30,7 +31,7 @@ func recordsHandler(db *sql.DB) http.HandlerFunc {
 		defer rows.Close()
 
 		for rows.Next() {
-			var record Record
+			var record types.Record
 			err := rows.Scan(&record.Name, &record.Version, &record.Release, &record.Location, &record.Summary)
 			if err != nil {
 				log.Println(err)

@@ -1,4 +1,4 @@
-package main
+package types
 
 type Record struct {
 	Name     string `json:"name"`

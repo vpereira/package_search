@@ -6,6 +6,9 @@ import (
 	"log"
 	"net/http"
 
+  "github.com/vpereira/package_search/internal/middlewares"
+  "github.com/vpereira/package_search/internal/handlers"
+
 	_ "github.com/lib/pq"
 )
 
@@ -24,8 +27,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	http.HandleFunc("/record", enforceGet(recordHandler(db)))
-	http.HandleFunc("/records", enforceGet(recordsHandler(db)))
+	http.HandleFunc("/record", middlewares.EnforceGet(handlers.RecordHandler(db)))
+	http.HandleFunc("/records", middlewares.EnforceGet(handlers.RecordsHandler(db)))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

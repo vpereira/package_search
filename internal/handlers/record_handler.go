@@ -1,13 +1,14 @@
-package main
+package handlers
 
 import (
 	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
+  "github.com/vpereira/package_search/internal/types"
 )
 
-func recordHandler(db *sql.DB) http.HandlerFunc {
+func RecordHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		queryValues := r.URL.Query()
 		names, ok := queryValues["name"]
@@ -16,7 +17,7 @@ func recordHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		var record Record
+		var record types.Record
 		err := db.QueryRow("SELECT name, version, release, location, summary FROM packages WHERE name=$1",
 			names[0]).Scan(&record.Name, &record.Version, &record.Release, &record.Location, &record.Summary)
 		if err != nil {
